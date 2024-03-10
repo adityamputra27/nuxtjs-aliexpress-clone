@@ -195,9 +195,11 @@ const user = useSupabaseUser();
 
 let isAccountMenu = ref(false);
 let searchItem = ref("");
-let isSearching = ref(false);
+let isSearching = ref(true);
 let isCartHover = ref(false);
 let items = ref(null);
+
+onMounted(() => (isSearching.value = false));
 
 const searchByName = useDebounce(async () => {
     isSearching.value = true;
