@@ -39,7 +39,11 @@
                     "
                 >
                     <Icon name="ph:user-thin" size="17" />
-                    Account
+                    {{
+                        user && user.user_metadata.full_name
+                            ? user.user_metadata.full_name
+                            : "Account"
+                    }}
                     <Icon name="mdi:chevron-down" size="15" class="ml-5" />
 
                     <div
@@ -64,7 +68,7 @@
                             </div>
                         </div>
                         <div class="border-b" />
-                        <ul class="bg-white">
+                        <ul class="bg-white" v-if="user">
                             <li
                                 @click="navigateTo('/orders')"
                                 class="text-[13px] py-2 px-4 w-full hover:bg-gray-200"
@@ -72,8 +76,7 @@
                                 My Orders
                             </li>
                             <li
-                                v-if="user"
-                                @click="client.auth.signOut()"
+                                @click="signOut()"
                                 class="text-[13px] py-2 px-4 w-full hover:bg-gray-200"
                             >
                                 Sign Out
@@ -222,4 +225,9 @@ watch(
         searchByName();
     }
 );
+
+const signOut = () => {
+    client.auth.signOut();
+    return navigateTo("/");
+};
 </script>
