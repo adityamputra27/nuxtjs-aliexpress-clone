@@ -227,8 +227,11 @@ const stripeInit = async () => {
 };
 
 const pay = async () => {
+    isProcessing.value = true;
+
     if (typeof currentAddress.value.data === "undefined") {
         showError("Please add shipping address");
+        isProcessing.value = false;
         return;
     }
 
@@ -249,9 +252,10 @@ const pay = async () => {
     // }
 
     await createOrder();
-    userStore.cart = [];
-    userStore.checkout = [];
-    return navigateTo("/success");
+
+    setTimeout(() => {
+        return navigateTo("/success");
+    }, 500);
 };
 
 const createOrder = async () => {
